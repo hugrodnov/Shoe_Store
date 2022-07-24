@@ -37,7 +37,7 @@
             </div>
           </div>
 
-    {% for tennis in todos_los_tennis %}
+    {% for tennis in todos_los_tennis.items %}
           <div class="col-md-4">
             <div class="card-box-a card-shadow">
 
@@ -89,7 +89,60 @@
           {% endfor %}
 
 
-      </section><!-- End Property Grid Single-->
+
+
+
+
+        <!--Pagination Links-->
+          <div class="row">
+            <div class="col-sm-12">
+              <nav class="pagination-a">
+                <a href="{{ url_for('all_tennis', page=todos_los_tennis.prev_num) }}"
+                  class="btn
+                  {% if todos_los_tennis.page == 1 %} disabled {% endif%}">
+                  &laquo;
+                </a>
+          <!-- Loop through the number of pages to display a link for each -->
+            {% for page_num in todos_los_tennis.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+
+            {% if page_num %}
+          <!--Check for active page and set link to "Active"-->
+              {% if todos_los_tennis.page == page_num %}
+              <a href="{{ url_for('all_tennis', page=page_num) }}"
+                class="btn btn-success">
+                {{ page_num }}
+              </a>
+              {% else %}
+              <a href="{{ url_for('all_tennis', page=page_num) }}"
+                 class="btn btn-outline-success">
+                {{ page_num }}
+              </a>
+              {% endif %}
+            {% else %}
+            ...
+            {% endif %}
+          {% endfor %}
+
+            <a href="{{ url_for('all_tennis', page=todos_los_tennis.next_num) }}"
+               class="btn
+               {% if todos_los_tennis.page == todos_los_tennis.pages %} disabled {% endif %}">
+                &raquo;
+            </a>
+              </nav>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <nav class="pagination-a">
+                <p class="pagination justify-content-center">
+                  Showing page {{ todos_los_tennis.page }} of {{ todos_los_tennis.pages }}
+                </p>
+              </nav>
+            </div>
+          </div>
+
+
+       </section><!-- End Property Grid Single-->
 
   </main><!-- End #main -->
 

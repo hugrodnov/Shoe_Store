@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash, abort
+from flask import Flask, render_template, redirect, url_for, flash, abort, request
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 
@@ -8,6 +8,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///inventario.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+ROWS_PER_PAGE = 12
 
 # configure table
 class Gorras(db.Model):
@@ -83,7 +84,8 @@ def all_hats():
 
 @app.route("/tenis")
 def all_tennis():
-    tennis = Tennis.query.all()
+    page = request.args.get("page", 1, type=int)
+    tennis = Tennis.query.paginate(page=page, per_page=ROWS_PER_PAGE)
     return render_template("all_tennis.html", todos_los_tennis=tennis)
 
 
