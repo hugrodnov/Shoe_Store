@@ -10,6 +10,7 @@ db = SQLAlchemy(app)
 
 ROWS_PER_PAGE = 12
 
+
 # configure table
 class Gorras(db.Model):
     __tablename__ = "gorras"
@@ -111,6 +112,7 @@ def show_gorras(gorras_id):
 def show_ropas(ropas_id):
     requested_ropas = Ropas.query.get(ropas_id)
     return render_template("single-ropas.html", ropas=requested_ropas)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
